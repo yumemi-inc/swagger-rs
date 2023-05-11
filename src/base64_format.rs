@@ -1,5 +1,5 @@
 #[cfg(feature = "serdejson")]
-use base64::{decode, encode, DecodeError};
+use base64::{engine::general_purpose::STANDARD, DecodeError, Engine};
 #[cfg(feature = "serdejson")]
 use serde::de::{Deserialize, Deserializer, Error};
 #[cfg(feature = "serdejson")]
@@ -16,7 +16,7 @@ impl Serialize for ByteArray {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&encode(&self.0))
+        serializer.serialize_str(&STANDARD.encode(&self.0))
     }
 }
 
@@ -27,7 +27,7 @@ impl<'de> Deserialize<'de> for ByteArray {
         D: Deserializer<'de>,
     {
         let s = String::deserialize(deserializer)?;
-        match decode(&s) {
+        match STANDARD.decode(&s) {
             Ok(bin) => Ok(ByteArray(bin)),
             _ => Err(D::Error::custom("invalid base64")),
         }
@@ -38,13 +38,13 @@ impl std::str::FromStr for ByteArray {
     type Err = DecodeError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(Self(decode(s)?))
+        Ok(Self(STANDARD.decode(s)?))
     }
 }
 
 impl ToString for ByteArray {
     fn to_string(&self) -> String {
-        encode(&self.0)
+        STANDARD.encode(&self.0)
     }
 }
 
