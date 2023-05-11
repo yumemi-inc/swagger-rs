@@ -41,8 +41,8 @@ futures = "0.3"
 frunk = { version = "0.4", optional = true }
 frunk_derives = { version = "0.4", optional = true }
 frunk_core = { version = "0.4", optional = true }
-frunk-enum-derive = { git = "https://github.com/yumemi-inc/frunk-enum.git", rev = "397a803", optional = true }
-frunk-enum-core = { git = "https://github.com/yumemi-inc/frunk-enum.git", rev = "397a803", optional = true }
+frunk-enum-derive = { git = "https://github.com/Metaswitch/frunk-enum.git", rev = "99abc11", optional = true }
+frunk-enum-core = { git = "https://github.com/Metaswitch/frunk-enum.git", rev = "99abc11", optional = true }
 
 # multipart/form-data
 mime = { version = "0.3", optional = true }
